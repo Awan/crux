@@ -1,0 +1,29 @@
+# 01_screenlock: lock screen at suspend 
+#
+
+IS_ACTIVE="$( pidof slock )"
+
+lock_screen() {
+  # skip if slock is allready running
+  if [ ! "$IS_ACTIVE" ]; then
+       su - abdullah -c "/bin/sh -c 'DISPLAY=:0.0 slock'" &
+  fi
+}
+
+case $1 in
+   hibernate)
+       lock_screen
+       ;;
+   suspend)
+       lock_screen
+       ;;
+   thaw)
+       # not required.
+       ;;
+   resume)
+       # not required.
+       ;;
+   *) exit $NA
+       ;;
+esac
+
